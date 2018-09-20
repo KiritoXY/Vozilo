@@ -7,6 +7,7 @@ http://www.kpexcise.gov.pk/mvrecords/
 
 http://excise.gos.pk/vehicle/vehicle_search
 
-UPLOADED CROP_2.PY ON 20SEP 2018
+20/9/2018
 
+UPLOADED CROP_2.PY 
 CROPS AND COVERTS TARGET IMAGE INTO GRAY SCALE
