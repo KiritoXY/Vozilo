@@ -1,0 +1,16 @@
+class Vehicle:
+   def __init__(self,list):
+      self.regno=list[0].text
+      self.make=list[1].text
+      self.regdate=list[2].text
+      self.TaxDate=list[3].text
+      self.engineno=list[4].text
+      self.Safe=list[5].text
+      self.body=list[6].text
+      self.owner=list[7].text
+      self.year=list[8].text
+      self.CPLC=list[9].text
+      self.seating=list[10].text
+      self.cov=list[11].text #Class of vehicle = cov
+      self.power=list[12].text
+      self.remarks=list[13].text
