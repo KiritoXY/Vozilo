@@ -1,0 +1,8 @@
+from bs4 import BeautifulSoup as bs
+import urllib.request as urlread
+response = urlread.urlopen('https://www.kpexcise.gov.pk/mvrecords/getmvr.php?dname=peshawar&dtype=reg&reg_no=B%202647')
+html = response.read()
+var = bs(html, "html.parser")
+list=var.findAll("strong")
+for data in list:
+    print(data.text)
