@@ -1,4 +1,7 @@
 # Vozilo
+UPLOADED GN2.ZIP
+RUN LOGIN_PAGE.PY
+
 ML DB with online web scarping
 
 Online DB sites:
