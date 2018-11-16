@@ -1,0 +1,10 @@
+radio button for car and bikes
+vehical = selected type.
+_______________________________________________________________
+Quries:
+
+1-records of a vehical (time, date .. tuples) by reg-number
+2-most visited vehical
+3-cplc uncleared vehical
+4-present vehicals
+5-parked since last 2 days
