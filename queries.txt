@@ -8,3 +8,4 @@ Quries:
 3-cplc uncleared vehical
 4-present vehicals
 5-parked since last 2 days
+6-records by date
