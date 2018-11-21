@@ -1,16 +1,56 @@
+import smtplib
 class Vehicle:
-   def __init__(self,list):
-      self.regno=list[0].text
-      self.make=list[1].text
-      self.regdate=list[2].text
-      self.TaxDate=list[3].text
-      self.engineno=list[4].text
-      self.Safe=list[5].text
-      self.body=list[6].text
-      self.owner=list[7].text
-      self.year=list[8].text
-      self.CPLC=list[9].text
-      self.seating=list[10].text
-      self.cov=list[11].text #Class of vehicle = cov
-      self.power=list[12].text
-      self.remarks=list[13].text
+   def __init__(self,list,region):
+      self.regno=lists[0]
+      self.make=lists[1]
+      self.regdate=lists[2]
+      self.engineno=lists[4]
+      if(region == 'sindh'):
+          self.TaxDate=lists[3]
+          self.Safe=lists[5]
+          self.body=lists[6]
+          self.owner=lists[7]
+          self.year=lists[8]
+          self.CPLC=lists[9]
+          self.seating=lists[10]
+          self.cov=lists[11] #Class of vehicle = cov
+          self.power=lists[12]
+          self.remarks=lists[13]
+      else:
+          self.chasisno=lists[3]
+          self.owner=lists[5]
+          self.fatherr=lists[6]
+          self.color=lists[7]
+          self.CPLC=lists[8]
+      if(self.CPLC != 'Vehicle is Clear'):
+          self.alert(self.CPLC,region,self.regno)
+   def alert(self,CPLC,region,regno):
+      print('About to send')
+      
+      sender = 'fastprojects123@gmail.com'
+      receivers = ['k163834@nu.edu.pk']
+      '''
+      message = """From: Vozilo Database
+      To: Admin
+      Subject: CPLC not Clear
+      
+      This mail is automtaically generated from the Vozilo Database Server
+      """
+      '''
+      message = """From: From Person <from@fromdomain.com>
+      To: To Person <to@todomain.com>
+      Subject: SMTP e-mail test
+
+      This is a test e-mail message.
+      """
+      mail = smtplib.SMTP('smtp.gmail.com',587)
+      mail.ehlo()
+      mail.starttls()
+      mail.login(sender,'vozilo123')
+      mail.sendmail(sender,receivers,message)
+      mail.close()
+lists= []
+for x in range(8):
+    lists.append(x)
+lists.append('Vehicle is not Clear')      
+obj=Vehicle(lists,'KPK')
