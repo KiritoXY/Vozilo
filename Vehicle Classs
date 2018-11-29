@@ -1,4 +1,5 @@
 import smtplib
+from email.mime.text import MIMEText
 class Vehicle:
    def __init__(self,list,region):
       self.regno=lists[0]
@@ -27,27 +28,18 @@ class Vehicle:
    def alert(self,CPLC,region,regno):
       print('About to send')
       
-      sender = 'fastprojects123@gmail.com'
+      sender ='k163834@nu.edu.pk'
       receivers = ['k163834@nu.edu.pk']
-      '''
-      message = """From: Vozilo Database
-      To: Admin
-      Subject: CPLC not Clear
-      
-      This mail is automtaically generated from the Vozilo Database Server
-      """
-      '''
-      message = """From: From Person <from@fromdomain.com>
-      To: To Person <to@todomain.com>
-      Subject: SMTP e-mail test
-
-      This is a test e-mail message.
-      """
-      mail = smtplib.SMTP('smtp.gmail.com',587)
+      msg = MIMEText('The following vehicle has entered the parking lot whose CPLC is not clear\nRegistration Number:'+str(regno)
+      +'\n\nKindly look into the matter'+'\n\n\n\n\nThis mail was automatically by the Vozilo Database')
+      msg['Subject'] = 'Database Alert!'
+      msg['From'] = 'Vozilo Database'
+      msg['To'] = 'k163834@nu.edu.pk'
+      mail = smtplib.SMTP('smtp.mailtrap.io',2525)
       mail.ehlo()
       mail.starttls()
-      mail.login(sender,'vozilo123')
-      mail.sendmail(sender,receivers,message)
+      mail.login('394684280206b9','eda14f5e73f3a7')
+      mail.sendmail(sender,receivers,msg.as_string())
       mail.close()
 lists= []
 for x in range(8):
