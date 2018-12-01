@@ -28,42 +28,43 @@ class Get_Data:
             obj=Vehicle(0,'AFR')
             return obj;
     def get_KPK_cities(self):
-        self.html_data=urlread.urlopen('https://www.kpexcise.gov.pk/mvrecords/')
-        self.read=self.html_data.read()
-        self.temp= bs(self.read,"html.parser")
-        self.cities=self.temp.findAll("option");
-        self.the_cities= [];
-        for i in range(1,len(self.cities)-2):
-            self.new_cities=str(self.cities[i])
-            self.index=self.new_cities.find('">')
-            self.new_cities=self.new_cities[0:self.index]
-            self.index=self.new_cities.find('="')
-            self.new_cities=self.new_cities[self.index+2:len(self.new_cities)]
-            self.the_cities.append(self.new_cities)
+        html_data=urlread.urlopen('https://www.kpexcise.gov.pk/mvrecords/')
+        read=html_data.read()
+        temp= bs(read,"html.parser")
+        cities=temp.findAll("option");
+        the_cities= [];
+        for i in range(1,len(cities)-2):
+            new_cities=str(cities[i])
+            index=new_cities.find('">')
+            new_cities=new_cities[0:index]
+            index=new_cities.find('="')
+            new_cities=new_cities[index+2:len(new_cities)]
+            the_cities.append(new_cities)
+            return the_cities
     def login_sindh(self,regno,Vtype):
         self.lists_text=[]
-        self.url='http://excise.gos.pk/vehicle/vehicle_result'
-        self.data={'reg_no':regno,'wheelers_type':Vtype} 
-        self.doc= requests.post(self.url,data=self.data)
-        self.var = bs(self.doc.text, "html.parser");
-        self.lists=self.var.findAll("div",{"class":"col-md-8"})
-        self.lists=self.var.findAll("h6")  
-        for data in self.lists:
+        url='http://excise.gos.pk/vehicle/vehicle_result'
+        data={'reg_no':regno,'wheelers_type':Vtype} 
+        doc= requests.post(url,data=data)
+        var = bs(doc.text, "html.parser");
+        lists=var.findAll("div",{"class":"col-md-8"})
+        lists=var.findAll("h6")  
+        for data in lists:
             self.lists_text.append(data.text)
     def login_KPK(self,regno):
-        self.get_KPK_cities();
-        for city in self.the_cities:
+        the_cities=self.get_KPK_cities();
+        for city in the_cities:
             print('City Started: '+city+'\n')
-            self.listes= []
+            listes= []
             self.newlist=[]
             index=0
-            self.new_regno=regno.replace("-","%20")
-            self.new_regno=regno.replace(" ","%20")
+            new_regno=regno.replace("-","%20")
+            new_regno=regno.replace(" ","%20")
             #print(city)
-            self.url2='https://www.kpexcise.gov.pk/mvrecords/getmvr.php?dname='+city+'&dtype=reg&reg_no='+self.new_regno
+            url2='https://www.kpexcise.gov.pk/mvrecords/getmvr.php?dname='+city+'&dtype=reg&reg_no='+new_regno
             #print(self.url2)
             try:
-                self.response = urlread.urlopen(self.url2)
+                response = urlread.urlopen(url2)
             except urllib.error.URLError:
                 print("Error accessing site")
                 continue
@@ -71,11 +72,11 @@ class Get_Data:
                 print("Error accessing site")
                 continue
             else:        
-                html2 = self.response.read()
+                html2 = response.read()
                 var2 = bs(html2, "html.parser")
-                self.listes=var2.findAll("strong")
-                if(self.listes != []):
-                    for data in self.listes:
+                listes=var2.findAll("strong")
+                if(listes != []):
+                    for data in listes:
                         #print(data.text)
                         if((index%2 == 0 and index < 20 and index > 2 and index != 4) or (index == 3)):
                             self.newlist.append(data.text)
@@ -120,19 +121,21 @@ class Vehicle:
                   self.cov=lists[11] #Class of vehicle = cov
                   self.power=lists[12]
                   self.remarks=lists[13]
+                  self.region=region
               else:
                   self.chasisno=lists[3]
                   self.owner=lists[5]
-                  self.fatherr=lists[6]
+                  self.father=lists[6]
                   self.color=lists[7]
                   self.CPLC=lists[8]
                   self.Safe='Safe Custody'
                   self.body='Vehicles'
                   self.seating=1
                   self.remarks='KPK Vehicle'
+                  self.region=region
               if(self.CPLC[0:16] != 'Vehicle is Clear'):
-                  self.alert(self.CPLC,region,self.regno)
-   def alert(self,CPLC,region,regno):
+                  self.alert(region,self.regno)
+   def alert(self,region,regno):
       print('About to send')   
       sender ='k163834@nu.edu.pk'
       receivers = ['k163834@nu.edu.pk']
@@ -152,4 +155,5 @@ class Vehicle:
       
       
 obj=Get_Data();
-obj.Identify('B 2647')
+data=obj.Identify('CK-4744')
+print(data.owner)
