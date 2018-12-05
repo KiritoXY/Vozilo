@@ -3,34 +3,61 @@ vehical = selected type.
 _______________________________________________________________
 Quries:
 
-x1-records of a vehical (time, date .. tuples) by reg-number
+--x1-records of a vehical (time, date .. tuples) by reg-number
 
 select f.Date, f.EnterTime, f.ExitTime 
 from Owner e, Frequency f
 where e.regNo=f.RegNo;
 
-2-most visited vehical
+--x2-most visited vehical in desc order
 
-select count(
+create procedure GetList
+	@TOV nvarchar (4)
+AS
+BEGIN
+	select Reg_no,count(reg_no) FROM Vozilo.dbo.frequency,Vozilo.dbo.Vehicle WHERE Vozilo.dbo.frequency.Exit_Time is NULL and Vozilo.dbo.frequency.REG_NO=Vozilo.dbo.VEHICLE.REGNO and Vozilo.dbo.VEHICLE.TOV=@TOV  group by (reg_no) order by (reg_no) desc;
+END;
 
-x3-cplc uncleared vehical
-x4-present vehicals
+exec Getlist 1;
 
-select * from Vozilo.dbo.Frequency,Vehicle v 
-where v.regno=f.regno,f.exit_time=null;
+--x3-cplc uncleared vehical
+--x4-present vehicals in parking lot
 
-5-parked since last 2 days
+create procedure GetInVehicles
+    @TOV nvarchar(4)
+AS
+BEGIN
+	select * FROM Vozilo.dbo.frequency,Vozilo.dbo.VEHICLE WHERE Vozilo.dbo.frequency.REG_NO=Vozilo.dbo.VEHICLE.REGNO and
+	Vozilo.dbo.frequency.Exit_Time is NULL and Vozilo.dbo.VEHICLE.TOV=@TOV;
+END;	
+
+EXEC GetInVehicles 1;
+
+xx5-parked since last 2 days
 
 select * from Vozilo.dbo.Frequency
 where exit_time=null;
 
 
 
-x6-records by date
+--x6-records by date
 
-select * from Vozilo.dbo.Vehicle,fre f
-where [join] and entertime == date;
+create procedure GetDates
+		@date date,@TOV nvarchar(4)
+as
+BEGIN
+	SELECT * FROM Vozilo.dbo.frequency,Vozilo.dbo.VEHICLE WHERE Vozilo.dbo.frequency.REG_NO=Vozilo.dbo.VEHICLE.REGNO and
+	Vozilo.dbo.frequency.Current_Date_ = @date and Vozilo.dbo.VEHICLE.TOV=@TOV;
+END;
 
-x7-AFR Vehicles
 
-select * from Vozilo.dbo.AFR
+exec GetDates @date='2018-12-04',@TOV=1;
+--x7-AFR Vehicles
+
+create procedure GetAFR
+as
+BEGIN
+	select * from Vozilo.dbo.AFR;
+END;
+
+exec GetAFR;
