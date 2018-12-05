@@ -3,14 +3,34 @@ vehical = selected type.
 _______________________________________________________________
 Quries:
 
-1-records of a vehical (time, date .. tuples) by reg-number
+x1-records of a vehical (time, date .. tuples) by reg-number
 
 select f.Date, f.EnterTime, f.ExitTime 
 from Owner e, Frequency f
 where e.regNo=f.RegNo;
 
 2-most visited vehical
-3-cplc uncleared vehical
-4-present vehicals
+
+select count(
+
+x3-cplc uncleared vehical
+x4-present vehicals
+
+select * from Vozilo.dbo.Frequency,Vehicle v 
+where v.regno=f.regno,f.exit_time=null;
+
 5-parked since last 2 days
-6-records by date
+
+select * from Vozilo.dbo.Frequency
+where exit_time=null;
+
+
+
+x6-records by date
+
+select * from Vozilo.dbo.Vehicle,fre f
+where [join] and entertime == date;
+
+x7-AFR Vehicles
+
+select * from Vozilo.dbo.AFR
